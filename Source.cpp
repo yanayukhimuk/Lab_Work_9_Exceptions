@@ -1,75 +1,35 @@
 #include "Header.h"
-using namespace std; 
+#include <Windows.h>
 
-template<typename T>
-Queue<T>::Queue(int sizeQueue) :
-    size(sizeQueue),
-    head(0), tail(0), count(0)
+void main()
 {
-    queuePtr = new T[size + 1];
-}
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
 
-template<typename T>
-Queue<T>::Queue(const Queue& otherQueue) :
-    size(otherQueue.size), head(otherQueue.head),
-    tail(otherQueue.tail), count(otherQueue.count),
-    queuePtr(new T[size + 1])
-{
-    for (int ix = 0; ix < size; ix++)
-        queuePtr[ix] = otherQueue.queuePtr[ix];
-// копирование 
-}
+    Queue<int> Q1;
+    Q1.push(5);
+    Q1.push(8);
+    Q1.push(11);
+    Q1.push(17);
+    Q1.push(2);
+    Q1.push(33);
+    Q1.print("Q1");
 
-template<typename T>
-Queue<T>::~Queue()
-{
-    delete[] queuePtr;
-}
+    /*int d;
+    d = Q1.GetItem();
+    cout << "d = " << d << endl;
+    */
+    
+    Queue<string> Q3;
+    Q3.push("собака");
+    Q3.push("кошка");
+    Q3.print("Q3");
 
-template<typename T>
-void Queue<T>::enqueue(const T& newElem) 
-{
-    assert(count < size);
-    queuePtr[tail++] = newElem;
-    count++;
-    if (tail > size)
-        tail -= size + 1;
-}
-
-// функция удаления элемента из очереди
-template<typename T>
-T Queue<T>::dequeue()
-{
-   assert(count > 0);
-   /* try
-    {
-        if (size == 0)
-        {
-            UnderFlowException ex = UnderFlowException("\nОчерель пустая");
-            throw ex;
-        }
-    }
-    catch (ex){
-        cout << "It is empty!" << endl; 
-    }*/
-    T returnValue = queuePtr[head++];
-    count--;
-    if (head > size)
-        head -= size + 1; 
-    return returnValue;
-}
-
-template<typename T>
-void Queue<T>::printQueue()
-{
-    cout << "Очередь: ";
-
-    if (tail == 0 && head == 0)
-        cout << " пустая\n";
+    Q3.clear();
+    if (Q3.IsEmpty())
+        cout << "OK" << endl;
     else
-    {
-        for (int ix = tail; ix >= head; ix--)
-           cout << queuePtr[ix] << " ";
-        cout << endl;
-    }
+        cout << "NO" << endl;
+
+    cout << "n = " << Q3.GetN() << endl;
 }
